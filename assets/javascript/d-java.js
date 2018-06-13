@@ -18,6 +18,7 @@ queryURL += '?' + $.param({
 
 
 $("#search-button").on("click", function(event){
+
     var searchInput = $("#searchTerm").val();
     var recordNum = $("#number-of-records").val();
     var startYear = $("#start-year").val();
@@ -37,9 +38,21 @@ $("#search-button").on("click", function(event){
         url: queryURL,
         method: "GET"
     }).then(function(article){
-        var results = article.response
-        var articleDiv = $("<div>");
-        console.log(results.docs[0].snippet)
+        var results = article.response.docs
+        
+         console.log(results[0].snippet)
+
+        if(recordNum == 1){
+            var articleDiv = $("<div>");
+            articleDiv.append("<h4>" + results[0].snippet + "<h4>")
+
+            console.log(articleDiv)
+            $("#show-results").append(articleDiv)
+        }
     });
 
+    })
+
+    $("#clear-results").on("click", function(event){
+        $("#show-results").empty()
     })
